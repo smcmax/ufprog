@@ -30,8 +30,7 @@ struct os_file_mapping {
 
 ufprog_bool UFPROG_API os_is_valid_filename(const char *filename)
 {
-	size_t i, len;
-	int j;
+	size_t i, j, len;
 
 	static const char invchars[] = { '<', '>', ':', '"', '/', '\\', '|', '?', '*' };
 
