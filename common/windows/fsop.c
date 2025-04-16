@@ -144,9 +144,8 @@ static int __os_enum_file(const char *dir, const char *base, ufprog_bool recursi
 	if (hFind == INVALID_HANDLE_VALUE) {
 		dwErrorCode = GetLastError();
 
-		if (dwErrorCode == ERROR_FILE_NOT_FOUND) {
+		if (dwErrorCode == ERROR_PATH_NOT_FOUND)
 			goto cleanup;
-		}
 
 		log_sys_error_utf8(dwErrorCode, "FindFirstFile failed with %u", dwErrorCode);
 		ret = -1;
