@@ -191,9 +191,9 @@ static ufprog_bool os_register_default_dirs(void)
 
 	prefix_len = strlen(prefix);
 	if (prefix[prefix_len - 1] == '/')
-		data_root = path_concat(true, 0, prefix, "lib", UFPROG_APPDATA_NAME, NULL);
+		data_root = path_concat(true, 0, prefix, "share", UFPROG_APPDATA_NAME, NULL);
 	else
-		data_root = path_concat(true, 0, prefix, "", "lib", UFPROG_APPDATA_NAME, NULL);
+		data_root = path_concat(true, 0, prefix, "", "share", UFPROG_APPDATA_NAME, NULL);
 
 	if (!data_root) {
 		log_err("Failed to generate program's data base directory\n");
