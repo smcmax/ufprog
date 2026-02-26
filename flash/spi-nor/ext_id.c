@@ -1447,7 +1447,8 @@ static int UFPROG_API spi_nor_reset_ext_erase_group(void *priv, struct ufprog_lo
 
 static void spi_nor_reset_ext_erase_groups(void)
 {
-	lookup_table_enum(ext_erase_info_list, spi_nor_reset_ext_erase_group, NULL);
+	if (ext_erase_info_list)
+		lookup_table_enum(ext_erase_info_list, spi_nor_reset_ext_erase_group, NULL);
 }
 
 static ufprog_status spi_nor_parse_ext_io_opcodes(struct json_object *jopcode, struct spi_nor_io_opcode *ret_opcodes,
@@ -1624,7 +1625,8 @@ static int UFPROG_API spi_nor_reset_ext_io_opcode(void *priv, struct ufprog_look
 
 static void spi_nor_reset_ext_io_opcodes(void)
 {
-	lookup_table_enum(ext_io_opcodes_list, spi_nor_reset_ext_io_opcode, NULL);
+	if (ext_io_opcodes_list)
+		lookup_table_enum(ext_io_opcodes_list, spi_nor_reset_ext_io_opcode, NULL);
 }
 
 static ufprog_status spi_nor_ext_ids_init_lists(void)
