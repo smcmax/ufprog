@@ -29,6 +29,7 @@
 #define S_CMD_Q_CMDMAP					0x02	/* Query supported commands bitmap		*/
 #define S_CMD_Q_PGMNAME					0x03	/* Query programmer name			*/
 #define S_CMD_Q_BUSTYPE					0x05	/* Query supported bustypes			*/
+#define S_CMD_Q_WRNMAXLEN				0x08	/* Query maximum write-n length			*/
 #define S_CMD_SYNCNOP					0x10	/* Special no-operation that returns NAK+ACK	*/
 #define S_CMD_S_BUSTYPE					0x12	/* Set used bustype(s).				*/
 #define S_CMD_O_SPIOP					0x13	/* Perform SPI operation.			*/
@@ -40,6 +41,8 @@
 struct ufprog_interface {
 	const char *path;
 	serial_port port;
+
+	uint32_t max_write_n;
 
 	uint32_t buffer_size;
 	uint32_t timeout_ms;

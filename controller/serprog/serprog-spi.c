@@ -145,6 +145,11 @@ ufprog_status serprog_spi_init(struct ufprog_interface *dev)
 		}
 	}
 
+	if (cmdbitmap & BIT(S_CMD_Q_WRNMAXLEN)) {
+		STATUS_CHECK_RET(serprog_query(dev, S_CMD_Q_WRNMAXLEN, data, 3));
+		dev->max_write_n = data[0] | ((uint32_t)data[1] << 8) | ((uint32_t)data[2] << 16);
+	}
+
 	if (cmdbitmap & BIT(S_CMD_S_SPI_FREQ)) {
 		spi_freq = htole32(UINT32_MAX);
 		STATUS_CHECK_RET(serprog_exec(dev, S_CMD_S_SPI_FREQ, &spi_freq, 4, &dev->max_spi_freq, 4, true));
@@ -228,7 +233,7 @@ ufprog_status UFPROG_API ufprog_spi_set_cs_pol(struct ufprog_interface *dev, ufp
 
 ufprog_status UFPROG_API ufprog_spi_mem_adjust_op_size(struct ufprog_interface *dev, struct ufprog_spi_mem_op *op)
 {
-	size_t n = 0;
+	size_t max_write_n = dev->max_write_n, n = 0;
 
 	if (!dev)
 		return UFP_INVALID_PARAMETER;
@@ -236,15 +241,18 @@ ufprog_status UFPROG_API ufprog_spi_mem_adjust_op_size(struct ufprog_interface *
 	if (op->data.dir == SPI_DATA_OUT)
 		n = op->cmd.len + op->addr.len + op->dummy.len;
 
-	if (op->data.len > dev->buffer_size - n)
-		op->data.len = dev->buffer_size - n;
+	if (!max_write_n || max_write_n > dev->buffer_size)
+		max_write_n = dev->buffer_size;
+
+	if (op->data.len > max_write_n - n)
+		op->data.len = max_write_n - n;
 
 	return UFP_OK;
 }
 
 ufprog_bool UFPROG_API ufprog_spi_mem_supports_op(struct ufprog_interface *dev, const struct ufprog_spi_mem_op *op)
 {
-	size_t n = 0;
+	size_t max_write_n = dev->max_write_n, n = 0;
 
 	if (!dev)
 		return false;
@@ -267,8 +275,11 @@ ufprog_bool UFPROG_API ufprog_spi_mem_supports_op(struct ufprog_interface *dev, 
 	if (op->data.len && (op->data.buswidth != 1 || op->data.dtr))
 		return false;
 
+	if (!max_write_n || max_write_n > dev->buffer_size)
+		max_write_n = dev->buffer_size;
+
 	if (op->data.dir == SPI_DATA_OUT) {
-		if (n >= dev->buffer_size && op->data.len)
+		if (n >= max_write_n && op->data.len)
 			return false;
 	}
 
