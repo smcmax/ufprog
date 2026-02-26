@@ -26,6 +26,7 @@ EXPORTS
 	os_find_module_symbols
 
 	os_is_valid_filename
+	os_mkdir_p
 	os_enum_file
 	os_open_file
 	os_close_file
