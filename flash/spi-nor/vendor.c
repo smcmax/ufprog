@@ -413,11 +413,7 @@ bool spi_nor_set_ext_vendor_capacity(uint32_t n)
 	if (n <= ext_vendor_capacity)
 		return true;
 
-	if (!ext_vendor_capacity)
-		newptr = malloc(n * sizeof(struct spi_nor_vendor));
-	else
-		newptr = realloc(ext_vendors, n * sizeof(struct spi_nor_vendor));
-
+	newptr = realloc(ext_vendors, n * sizeof(struct spi_nor_vendor));
 	if (!newptr) {
 		logm_err("No memory for external vendor list\n");
 		return false;

@@ -137,11 +137,7 @@ static ufprog_bool os_register_default_dirs(void)
 	while (true) {
 		dwBuffSize += PATH_INCREMENT;
 
-		if (!szProgPath)
-			szProgPathNew = malloc(dwBuffSize * sizeof(WCHAR));
-		else
-			szProgPathNew = realloc(szProgPath, dwBuffSize * sizeof(WCHAR));
-
+		szProgPathNew = realloc(szProgPath, dwBuffSize * sizeof(WCHAR));
 		if (!szProgPathNew) {
 			log_err("No memory for program's root directory\n");
 			if (szProgPath)

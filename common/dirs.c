@@ -64,24 +64,19 @@ const char *UFPROG_API get_root_dir(void)
 
 ufprog_status UFPROG_API add_dir(enum dir_category cat, const char *dir)
 {
-	char **old_list;
+	char **tmp_list;
 
 	if (cat < 0 || cat >= __MAX_DIR_CATEGORY || !dir)
 		return UFP_INVALID_PARAMETER;
 
 	if (!dirs[cat].capacity && dirs[cat].used == dirs[cat].capacity) {
-		old_list = dirs[cat].list;
-
-		if (!dirs[cat].list)
-			dirs[cat].list = malloc(DEFAULT_DIR_LIST_CAPACITY * sizeof(char *));
-		else
-			dirs[cat].list = realloc(old_list, DEFAULT_DIR_LIST_CAPACITY * sizeof(char *));
-
-		if (!dirs[cat].list) {
-			dirs[cat].list = old_list;
+		tmp_list = realloc(dirs[cat].list, (dirs[cat].capacity + DEFAULT_DIR_LIST_CAPACITY) * sizeof(char *));
+		if (!tmp_list) {
 			log_err("No memory for %s dir list\n", dir_cat_names[cat]);
 			return UFP_NOMEM;
 		}
+
+		dirs[cat].list = tmp_list;
 
 		memset(&dirs[cat].list[dirs[cat].capacity], 0, DEFAULT_DIR_LIST_CAPACITY * sizeof(char *));
 		dirs[cat].capacity += DEFAULT_DIR_LIST_CAPACITY;

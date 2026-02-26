@@ -41,11 +41,7 @@ static ufprog_bool os_register_prog_root_dir(void)
 	while (true) {
 		buff_size += PATH_INCREMENT;
 
-		if (!prog_path)
-			prog_path_new = malloc(buff_size);
-		else
-			prog_path_new = realloc(prog_path, buff_size);
-
+		prog_path_new = realloc(prog_path, buff_size);
 		if (!prog_path_new) {
 			log_err("No memory for program's root directory\n");
 			if (prog_path)
