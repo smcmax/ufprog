@@ -573,7 +573,7 @@ ufprog_status dump_flash(struct ufsnor_instance *inst, uint64_t addr, uint64_t s
 			goto out;
 		}
 
-		ret = dump_flash_die(inst, opaddr, opsize, buf, dieaddr + opaddr);
+		ret = dump_flash_die(inst, opaddr, opsize, buf, dieaddr);
 		if (ret) {
 			os_fprintf(stderr, "Read failed on Die %u, addr 0x%" PRIx64 "\n", die, opaddr);
 			goto out;
