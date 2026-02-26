@@ -23,8 +23,6 @@ EXTERN_C_BEGIN
 #define strncasecmp			_strnicmp
 
 char *strcasestr(const char *s, const char *find);
-size_t strlcpy(char *dst, const char *src, size_t dsize);
-size_t strlcat(char *dst, const char *src, size_t dsize);
 char *strndup(const char *str, size_t n);
 ssize_t wgetdelim(wchar_t **bufptr, size_t *n, int delim, FILE *fp);
 int vasprintf(char **strp, const char *fmt, va_list ap);

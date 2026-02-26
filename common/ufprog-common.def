@@ -187,8 +187,6 @@ EXPORTS
 	os_main
 
 	strcasestr
-	strlcat
-	strlcpy
 	vasprintf
 	asprintf
 

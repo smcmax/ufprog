@@ -13,8 +13,6 @@ set(os_win32_src
 
 set(win32_newlib_src
 	newlib/strcasestr.c
-	newlib/strlcat.c
-	newlib/strlcpy.c
 	newlib/strndup.c
 	newlib/wgetdelim.c
 )
