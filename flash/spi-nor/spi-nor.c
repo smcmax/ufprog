@@ -100,6 +100,7 @@ ufprog_status UFPROG_API ufprog_spi_nor_detach(struct spi_nor *snor, ufprog_bool
 		ufprog_spi_close_device(snor->spi);
 
 	snor->spi = NULL;
+	snor->param.size = 0;
 
 	return UFP_OK;
 }
