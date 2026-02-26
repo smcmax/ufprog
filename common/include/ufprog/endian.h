@@ -47,10 +47,12 @@ static inline uint16_t bswap16(uint16_t _x)
 #endif
 
 #ifdef __HOST_LE
+#if 0
 #define ntohl(x)	(bswap32(x))
 #define ntohs(x)	(bswap16(x))
 #define htonl(x)	(bswap32(x))
 #define htons(x)	(bswap16(x))
+#endif
 
 #define htobe16(x)	bswap16((x))
 #define htobe32(x)	bswap32((x))
