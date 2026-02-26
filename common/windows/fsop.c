@@ -421,6 +421,11 @@ ufprog_bool UFPROG_API os_read_file(file_handle handle, size_t len, void *buf, s
 			break;
 		}
 
+		if (!dwBytesRead) {
+			ret = false;
+			break;
+		}
+
 		nBytesRead += dwBytesRead;
 	}
 
