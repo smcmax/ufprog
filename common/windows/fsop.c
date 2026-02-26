@@ -302,7 +302,7 @@ ufprog_status UFPROG_API os_open_file(const char *file, ufprog_bool read, ufprog
 	}
 
 	handle->path = (char *)((uintptr_t)handle + sizeof(*handle));
-	strlcpy(handle->path, file, pathlen + 1);
+	memcpy(handle->path, file, pathlen + 1);
 
 	ret = __os_open_file(file, read, write, trunc, create, handle);
 	if (ret) {
@@ -495,7 +495,7 @@ ufprog_status UFPROG_API os_open_file_mapping(const char *file, uint64_t size, s
 	}
 
 	mapping->file.path = (char *)((uintptr_t)mapping + sizeof(*mapping));
-	strlcpy(mapping->file.path, file, pathlen + 1);
+	memcpy(mapping->file.path, file, pathlen + 1);
 
 	ret = __os_open_file(file, true, write, trunc, write, &mapping->file);
 	if (ret) {
