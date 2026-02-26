@@ -108,7 +108,6 @@ static int __os_enum_file(const char *dir, const char *base, ufprog_bool recursi
 	char *dirpat, *name;
 	LPWSTR lpwsDirPat;
 	DWORD dwErrorCode;
-	size_t dirlen;
 	HANDLE hFind;
 	int ret = 0;
 
@@ -119,13 +118,7 @@ static int __os_enum_file(const char *dir, const char *base, ufprog_bool recursi
 		base = ".";
 
 	/* Build enumration pattern */
-	dirlen = strlen(dir);
-
-	if (dir[dirlen - 1] == '\\')
-		dirpat = path_concat(false, 0, dir, "*", NULL);
-	else
-		dirpat = path_concat(false, 0, dir, "", "*", NULL);
-
+	dirpat = path_concat(false, 0, dir, "*", NULL);
 	if (!dirpat) {
 		log_err("Unable to build enumration pattern\n");
 		return -1;
@@ -167,11 +160,7 @@ static int __os_enum_file(const char *dir, const char *base, ufprog_bool recursi
 			if (recursive) {
 				char *subdir, *base_dir;
 
-				if (dir[dirlen - 1] == '\\')
-					subdir = path_concat(true, 0, dir, name, NULL);
-				else
-					subdir = path_concat(true, 0, dir, "", name, NULL);
-
+				subdir = path_concat(true, 0, dir, name, NULL);
 				if (!subdir) {
 					log_err("Unable to build subdirectory\n");
 					ret = -1;
@@ -181,7 +170,7 @@ static int __os_enum_file(const char *dir, const char *base, ufprog_bool recursi
 				if (!strcmp(base, ""))
 					base_dir = path_concat(false, 0, name, NULL);
 				else
-					base_dir = path_concat(false, 0, base, "", name, NULL);
+					base_dir = path_concat(false, 0, base, name, NULL);
 
 				if (!base_dir) {
 					log_err("Unable to build subdir enumration pattern\n");

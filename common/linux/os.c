@@ -112,7 +112,6 @@ static ufprog_bool os_register_app_dirs(void)
 	char *config_home, *new_path;
 	ufprog_bool bret = false;
 	ufprog_status ret;
-	size_t dirlen;
 
 	homedir = getenv("XDG_CONFIG_HOME");
 	if (!homedir || !*homedir) {
@@ -128,12 +127,7 @@ static ufprog_bool os_register_app_dirs(void)
 		}
 	}
 
-	dirlen = strlen(homedir);
-	if (homedir[dirlen - 1] == '/')
-		config_home = path_concat(true, 0, homedir, appname, NULL);
-	else
-		config_home = path_concat(true, 0, homedir, "", appname, NULL);
-
+	config_home = path_concat(true, 0, homedir, appname, NULL);
 	if (!config_home) {
 		log_err("Failed to generate program's config base directory\n");
 		return false;
@@ -187,14 +181,8 @@ static ufprog_bool os_register_default_dirs(void)
 	char *data_root, *new_path;
 	ufprog_bool bret = false;
 	ufprog_status ret;
-	size_t prefix_len;
 
-	prefix_len = strlen(prefix);
-	if (prefix[prefix_len - 1] == '/')
-		data_root = path_concat(true, 0, prefix, "share", UFPROG_APPDATA_NAME, NULL);
-	else
-		data_root = path_concat(true, 0, prefix, "", "share", UFPROG_APPDATA_NAME, NULL);
-
+	data_root = path_concat(true, 0, prefix, "share", UFPROG_APPDATA_NAME, NULL);
 	if (!data_root) {
 		log_err("Failed to generate program's data base directory\n");
 		return false;

@@ -76,7 +76,7 @@ static ufprog_bool os_register_app_dirs(void)
 	}
 
 	/* Register program's config directory */
-	new_path = path_concat(true, 0, appdata_base, "", UFPROG_APPDATA_NAME, NULL);
+	new_path = path_concat(true, 0, appdata_base, UFPROG_APPDATA_NAME, NULL);
 	if (!new_path) {
 		log_err("Failed to generate program's config directory\n");
 		goto cleanup;
@@ -94,7 +94,7 @@ static ufprog_bool os_register_app_dirs(void)
 		goto cleanup;
 
 	/* Register program's device directory */
-	new_path = path_concat(true, 0, appdata_base, "", UFPROG_APPDATA_NAME, UFPROG_DEVICE_DIR_NAME, NULL);
+	new_path = path_concat(true, 0, appdata_base, UFPROG_APPDATA_NAME, UFPROG_DEVICE_DIR_NAME, NULL);
 	if (!new_path) {
 		log_err("Failed to generate program's device directory\n");
 		goto cleanup;
@@ -107,7 +107,7 @@ static ufprog_bool os_register_app_dirs(void)
 		goto cleanup;
 
 	/* Register program's plugin directory */
-	new_path = path_concat(true, 0, appdata_base, "", UFPROG_APPDATA_NAME, UFPROG_PLUGIN_DIR_NAME, NULL);
+	new_path = path_concat(true, 0, appdata_base, UFPROG_APPDATA_NAME, UFPROG_PLUGIN_DIR_NAME, NULL);
 	if (!new_path) {
 		log_err("Failed to generate program's plugin directory\n");
 		goto cleanup;

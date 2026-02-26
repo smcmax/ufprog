@@ -136,7 +136,7 @@ char *UFPROG_API path_concat(ufprog_bool end_sep, size_t extra_len, const char *
 	if (!base)
 		return NULL;
 
-	new_len = strlen(base);
+	new_len = strlen(base) + 1;
 
 	va_start(args, base);
 
@@ -161,6 +161,9 @@ char *UFPROG_API path_concat(ufprog_bool end_sep, size_t extra_len, const char *
 	memcpy(p, base, len);
 	p += len;
 
+	if (p[-1] != PATH_SEP)
+		*p++ = PATH_SEP;
+
 	va_start(args, base);
 
 	do {
@@ -169,7 +172,9 @@ char *UFPROG_API path_concat(ufprog_bool end_sep, size_t extra_len, const char *
 			len = strlen(str);
 			memcpy(p, str, len);
 			p += len;
-			*p++ = PATH_SEP;
+
+			if (p[-1] != PATH_SEP)
+				*p++ = PATH_SEP;
 		}
 	} while (str);
 

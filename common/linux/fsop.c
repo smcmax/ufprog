@@ -109,7 +109,6 @@ static int __os_enum_file(const char *dir, const char *base, ufprog_bool recursi
 {
 	struct dirent *dent;
 	int err, ret = 0;
-	size_t dirlen;
 	DIR *d;
 
 	if (!dir || !cb)
@@ -117,8 +116,6 @@ static int __os_enum_file(const char *dir, const char *base, ufprog_bool recursi
 
 	if (!base)
 		base = ".";
-
-	dirlen = strlen(dir);
 
 	d = opendir(dir);
 	if (!d) {
@@ -151,11 +148,7 @@ static int __os_enum_file(const char *dir, const char *base, ufprog_bool recursi
 			if (recursive) {
 				char *subdir, *base_dir;
 
-				if (dir[dirlen - 1] == '/')
-					subdir = path_concat(true, 0, dir, dent->d_name, NULL);
-				else
-					subdir = path_concat(true, 0, dir, "", dent->d_name, NULL);
-
+				subdir = path_concat(true, 0, dir, dent->d_name, NULL);
 				if (!subdir) {
 					log_err("Unable to build subdirectory\n");
 					ret = -1;
@@ -165,7 +158,7 @@ static int __os_enum_file(const char *dir, const char *base, ufprog_bool recursi
 				if (!strcmp(base, ""))
 					base_dir = path_concat(false, 0, dent->d_name, NULL);
 				else
-					base_dir = path_concat(false, 0, base, "", dent->d_name, NULL);
+					base_dir = path_concat(false, 0, base, dent->d_name, NULL);
 
 				if (!base_dir) {
 					log_err("Unable to build subdir enumration pattern\n");
