@@ -523,8 +523,8 @@ static int nand_test_rw(struct ufnand_instance *nandinst, uint64_t addr, uint64_
 	if (!len)
 		len = nandinst->info.maux.size - addr;
 
-	end = ((addr + len) & ~nandinst->info.maux.block_mask);
-	addr &= ~nandinst->info.maux.block_mask;
+	end = ((addr + len) & ~(uint64_t)nandinst->info.maux.block_mask);
+	addr &= ~(uint64_t)nandinst->info.maux.block_mask;
 
 	ntd.start_block = (uint32_t)(addr >> nandinst->info.maux.block_shift);
 	ntd.block_count = (uint32_t)((end - addr) >> nandinst->info.maux.block_shift);

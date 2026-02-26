@@ -2272,7 +2272,7 @@ size_t nmbm_calc_structure_size(struct nmbm_lower_device *nld)
 		NMBM_BITMAP_BLOCKS_PER_UNIT) * NMBM_BITMAP_UNIT_SIZE;
 	mapping_table_size = block_count * sizeof(int32_t);
 
-	info_table_size = NMBM_ALIGN(sizeof(struct nmbm_info_table_header),
+	info_table_size = NMBM_ALIGN((uint32_t)sizeof(struct nmbm_info_table_header),
 				     nld->writesize);
 	info_table_size += NMBM_ALIGN(state_table_size, nld->writesize);
 	info_table_size += NMBM_ALIGN(mapping_table_size, nld->writesize);
@@ -2311,7 +2311,7 @@ static void nmbm_init_structure(struct nmbm_instance *ni)
 		NMBM_BITMAP_BLOCKS_PER_UNIT) * NMBM_BITMAP_UNIT_SIZE;
 	ni->mapping_table_size = ni->block_count * sizeof(*ni->block_mapping);
 
-	ni->info_table_size = NMBM_ALIGN(sizeof(ni->info_table),
+	ni->info_table_size = NMBM_ALIGN((uint32_t)sizeof(ni->info_table),
 					 ni->lower.writesize);
 	ni->info_table.state_table_off = ni->info_table_size;
 
