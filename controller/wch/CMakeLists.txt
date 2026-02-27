@@ -4,7 +4,7 @@ project(wch-controllers)
 
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
-if(USE_VCPKG)
+if(MSVC)
 	find_package(hidapi CONFIG REQUIRED)
 	set(HIDAPI_INC hidapi::include)
 	set(HIDAPI_LIB hidapi::hidapi hidapi::winapi)

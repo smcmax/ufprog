@@ -4,15 +4,15 @@ project(ufprog_common)
 
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
-if(USE_VCPKG)
-find_package(json-c CONFIG REQUIRED)
-set(JSON_C_LIB json-c::json-c json-c::json-c-static)
+if(MSVC)
+	find_package(json-c CONFIG REQUIRED)
+	set(JSON_C_LIB json-c::json-c)
 else()
-find_package(PkgConfig)
+	find_package(PkgConfig)
 
-pkg_check_modules(json-c REQUIRED json-c>=0.13)
-set(JSON_C_INC ${json-c_INCLUDEDIR})
-set(JSON_C_LIB ${json-c_LIBRARIES})
+	pkg_check_modules(json-c REQUIRED json-c>=0.13)
+	set(JSON_C_INC ${json-c_INCLUDEDIR})
+	set(JSON_C_LIB ${json-c_LIBRARIES})
 endif()
 
 if(WIN32 OR MINGW)

@@ -20,17 +20,12 @@ else()
 	endif()
 endif()
 
-OPTION(USE_VCPKG "Use vcpkg for package configuration" OFF)
-
-if(USE_VCPKG)
-	find_package(libusb CONFIG REQUIRED)
-	set(LIBUSB_INC ${LIBUSB_INCLUDE_DIRS}/..)
-	set(LIBUSB_LIB ${LIBUSB_LIBRARIES})
+find_package(PkgConfig)
+pkg_check_modules(libusb-1.0 REQUIRED libusb-1.0)
+set(LIBUSB_INC ${libusb-1.0_INCLUDEDIR})
+if(MSVC)
+	set(LIBUSB_LIB ${libusb-1.0_LINK_LIBRARIES})
 else()
-	find_package(PkgConfig)
-
-	pkg_check_modules(libusb-1.0 REQUIRED libusb-1.0)
-	set(LIBUSB_INC ${libusb-1.0_INCLUDEDIR})
 	set(LIBUSB_LIB ${libusb-1.0_LIBRARIES})
 endif()
 
